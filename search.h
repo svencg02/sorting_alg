@@ -24,13 +24,16 @@
 //		   is not found in the vector.
 // =================================================================
 template <class T>
-int sequentialSearch(const std::vector<T> &v, T key) {
+pair<int, int> sequentialSearch(const std::vector<T> &v, T key) {
+	int steps = 0;
 	for (int i = 0; i < v.size(); i++) {
 		if (v[i] == key) {
-			return i;
+			steps++;
+			return pair<int, int>(i, steps);
 		}
+		else steps++;
 	}
-	return -1;
+	return pair<int, int>(-1, steps);
 }
 
 // =================================================================
@@ -42,22 +45,26 @@ int sequentialSearch(const std::vector<T> &v, T key) {
 //		   is not found in the vector.
 // =================================================================
 template <class T>
-int binarySearch(const std::vector<T> &v, T key) {
-	int low, high, mid;
+pair<int, int> binarySearch(const std::vector<T> &v, T key) {
+	int low, high, mid, steps = 0;
 
 	low = 0;
 	high = v.size() - 1;
+	
 	while (low <= high) {
 		mid = low + ((high - low) / 2); // mid = (high + low) / 2;
 		if (key == v[mid]) {
-			return mid;
+			steps++;
+			return pair<int, int>(mid, steps);
 		} else if (key < v[mid]) {
 			high = mid - 1;
+			steps++;
 		} else {
 			low = mid + 1;
+			steps++;
 		}
 	}
-	return -1;
+	return pair<int, int>(-1, steps);
 }
 
 // =================================================================
